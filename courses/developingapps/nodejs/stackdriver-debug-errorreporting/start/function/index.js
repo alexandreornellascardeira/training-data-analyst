@@ -11,7 +11,10 @@ exports.subscribe = function subscribe(event) {
   // The Cloud Pub/Sub Message object.
   const pubsubMessage = event.data;
 
-  let feedbackObject = JSON.parse(Buffer.from(pubsubMessage.data, 'base64').toString()).data;
+  //20190628 CONVERSION ERROR... 
+  //let feedbackObject = JSON.parse(Buffer.from(pubsubMessage.data, 'base64').toString()).data;
+  let feedbackObject = JSON.parse(Buffer.from(pubsubMessage, 'base64').toString()).data;
+  
   console.log('Feedback object data before Language API:' + JSON.stringify(feedbackObject));
   
   return languageAPI.analyze(feedbackObject.feedback).then(score => {
